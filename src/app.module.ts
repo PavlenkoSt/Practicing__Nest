@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { PostsModule } from './posts/posts.module';
     MongooseModule.forRoot(
       `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.fhbgn.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     ),
+    AuthModule,
   ],
 })
 export class AppModule {}
