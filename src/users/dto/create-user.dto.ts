@@ -1,7 +1,7 @@
-import UserRole from 'src/types/UserRole';
+import { Role } from 'src/types/role.enum';
 
 export class CreateUserDto {
   readonly name: string;
   readonly password: string;
-  readonly role: UserRole;
+  readonly role: Role[];
 }
