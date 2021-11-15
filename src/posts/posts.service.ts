@@ -1,7 +1,7 @@
 import { CreatePostDto } from './dto/create-post.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Condition, FilterQuery, Model } from 'mongoose';
+import { Condition, Model } from 'mongoose';
 import { Post, PostDocument } from './schemas/post.schema';
 import { User } from 'src/users/schemas/user.schema';
 

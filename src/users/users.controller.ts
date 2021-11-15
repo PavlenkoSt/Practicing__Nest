@@ -29,7 +29,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async deleteuser(@Param(':id') id: Condition<User>) {
+  async deleteuser(@Param('id') id: Condition<User>) {
     await this.postsService.deleteAllByAuthor(id);
     return this.usersService.delete(id);
   }
