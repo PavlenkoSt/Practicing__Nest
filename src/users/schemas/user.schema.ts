@@ -6,14 +6,14 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop()
+  @Prop({ unique: true })
   name: string;
 
   @Prop()
   password: string;
 
-  @Prop()
-  role: [Role];
+  @Prop({ default: [Role.User] })
+  role: Role;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
