@@ -21,6 +21,6 @@ export class UsersService {
   }
 
   async delete(id) {
-    return await this.userModel.findOneAndDelete({ id });
+    return await this.userModel.findOneAndDelete({ _id: id });
   }
 }
