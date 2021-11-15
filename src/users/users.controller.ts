@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/update-user.dto';
 import { Condition } from 'mongoose';
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { PostsService } from 'src/posts/posts.service';
@@ -26,6 +27,11 @@ export class UsersController {
   @Post()
   async createNewUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @Post(':id')
+  async editUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
+    return this.usersService.edit(id, userDto);
   }
 
   @Delete(':id')

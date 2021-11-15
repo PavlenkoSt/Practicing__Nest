@@ -1,3 +1,5 @@
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,9 +17,13 @@ export class UsersService {
     return this.userModel.findOne({ username });
   }
 
-  async create(userDto): Promise<User> {
+  async create(userDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(userDto);
     return createdUser.save();
+  }
+
+  async edit(userId, userDto: UpdateUserDto) {
+    return this.userModel.updateOne({ _id: userId }, userDto);
   }
 
   async delete(id) {

@@ -1,3 +1,4 @@
+import { UpdatePostDto } from './dto/update-post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -20,6 +21,10 @@ export class PostsService {
   async create(postDto: CreatePostDto) {
     const newPost = new this.postModel(postDto);
     return newPost.save();
+  }
+
+  async edit(postId: string, postDto: UpdatePostDto) {
+    return this.postModel.updateOne({ _id: postId }, postDto);
   }
 
   async deleteOne(id: string) {
