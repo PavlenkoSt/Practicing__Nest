@@ -1,9 +1,11 @@
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('posts')
+@UseGuards(JwtAuthGuard)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 

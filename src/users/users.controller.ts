@@ -1,13 +1,23 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Condition } from 'mongoose';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { PostsService } from 'src/posts/posts.service';
 
 import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService } from './users.service';
 import { User } from './schemas/user.schema';
+import { PostsService } from 'src/posts/posts.service';
+import { UsersService } from './users.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
