@@ -42,15 +42,11 @@ export class PostsService {
   }
 
   async deleteOne(id: string) {
-    console.log(await this.postModel.findOne({ _id: id }));
-
-    // return await this.postModel.findOneAndDelete({ _id: id });
+    return await this.postModel.findOneAndDelete({ _id: id });
   }
 
   async deleteOneMy(authorId: Condition<User>, id: string) {
-    console.log(await this.postModel.findOne({ authorId, _id: id }));
-
-    // return await this.postModel.findOneAndDelete({ authorId, _id: id });
+    return await this.postModel.findOneAndDelete({ authorId, _id: id });
   }
 
   async deleteAllByAuthor(authorId: Condition<User>) {
