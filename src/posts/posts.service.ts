@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Condition, Model } from 'mongoose';
 
@@ -38,13 +38,16 @@ export class PostsService {
   async create(postDto: CreatePostDto & { authorId: string }) {
     try {
       if (!postDto.title || !postDto.description || !postDto.authorId) {
-        throw new Error('Need title, description and authorId');
+        throw new HttpException(
+          'Need title, description and authorId',
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       const newPost = await this.postModel.create(postDto);
       return newPost.save();
     } catch (e) {
-      console.log(e);
+      return e;
     }
   }
 

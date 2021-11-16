@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -30,7 +30,10 @@ export class UsersService {
   async create(userDto: CreateUserDto): Promise<User> {
     try {
       if (!userDto.name || !userDto.password) {
-        throw new Error('Need name and password');
+        throw new HttpException(
+          'Need name and password',
+          HttpStatus.BAD_REQUEST,
+        );
       }
 
       const { password } = userDto;
@@ -43,7 +46,7 @@ export class UsersService {
       });
       return createdUser.save();
     } catch (e) {
-      console.log(e);
+      return e;
     }
   }
 
