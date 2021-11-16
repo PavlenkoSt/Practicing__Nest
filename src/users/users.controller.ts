@@ -48,14 +48,24 @@ export class UsersController {
 
   @Roles(Role.Admin, Role.User)
   @Post('my-profile')
-  async editSelf(@AuthUser() user: any, @Body() userDto: UpdateUserDto) {
-    return this.usersService.edit(user.userId, userDto);
+  async editSelf(
+    @AuthUser('userId') userId: string,
+    @Body() userDto: UpdateUserDto,
+  ) {
+    return this.usersService.edit(userId, userDto);
   }
 
   @Roles(Role.Admin)
   @Post(':id')
   async editUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
     return this.usersService.edit(id, userDto);
+  }
+
+  @Roles(Role.Admin, Role.User)
+  @Delete('my-profile')
+  async deleteSelf(@AuthUser('userId') userId: Condition<User>) {
+    await this.postsService.deleteAllByAuthor(userId);
+    return this.usersService.delete(userId);
   }
 
   @Roles(Role.Admin)
