@@ -1,3 +1,4 @@
+import { ValidationPipe } from './../pipes/validation.pipe';
 import {
   Body,
   Controller,
@@ -64,7 +65,10 @@ export class PostsController {
     description: 'Create posts',
   })
   @ApiBody({ type: CreatePostDto })
-  createPost(@AuthUser('userId') userId, @Body() postDto: CreatePostDto) {
+  createPost(
+    @AuthUser('userId') userId,
+    @Body(new ValidationPipe()) postDto: CreatePostDto,
+  ) {
     return this.postsService.create({ ...postDto, authorId: userId });
   }
 
@@ -78,7 +82,7 @@ export class PostsController {
   editMyPost(
     @AuthUser('userId') userId: Condition<User>,
     @Param('id') postId,
-    @Body() postDto: UpdatePostDto,
+    @Body(new ValidationPipe()) postDto: UpdatePostDto,
   ) {
     return this.postsService.editMyPost(userId, postId, postDto);
   }
@@ -90,7 +94,10 @@ export class PostsController {
     description: 'Edit post (admin)',
   })
   @ApiBody({ type: UpdatePostDto })
-  editPost(@Param('id') postId, @Body() postDto: UpdatePostDto) {
+  editPost(
+    @Param('id') postId,
+    @Body(new ValidationPipe()) postDto: UpdatePostDto,
+  ) {
     return this.postsService.edit(postId, postDto);
   }
 

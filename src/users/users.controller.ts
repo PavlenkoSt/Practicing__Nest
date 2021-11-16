@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ValidationPipe } from './../pipes/validation.pipe';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Condition } from 'mongoose';
 
@@ -58,7 +59,7 @@ export class UsersController {
     description: 'Create user (admin)',
   })
   @ApiBody({ type: CreateUserDto })
-  async createNewUser(@Body() userDto: CreateUserDto) {
+  async createNewUser(@Body(new ValidationPipe()) userDto: CreateUserDto) {
     return this.usersService.create(userDto);
   }
 
@@ -71,7 +72,7 @@ export class UsersController {
   @ApiBody({ type: UpdateUserDto })
   async editSelf(
     @AuthUser('userId') userId: string,
-    @Body() userDto: UpdateUserDto,
+    @Body(new ValidationPipe()) userDto: UpdateUserDto,
   ) {
     return this.usersService.edit(userId, userDto);
   }
@@ -83,7 +84,10 @@ export class UsersController {
     description: 'Update user (admin)',
   })
   @ApiBody({ type: UpdateUserDto })
-  async editUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
+  async editUser(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) userDto: UpdateUserDto,
+  ) {
     return this.usersService.edit(id, userDto);
   }
 
