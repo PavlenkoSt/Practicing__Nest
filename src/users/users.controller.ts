@@ -7,9 +7,9 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { Condition } from 'mongoose';
 
+import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schemas/user.schema';
 import { PostsService } from 'src/posts/posts.service';

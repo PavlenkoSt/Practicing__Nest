@@ -1,7 +1,3 @@
-import { Condition } from 'mongoose';
-import { User } from './../users/schemas/user.schema';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { CreatePostDtoWithoutAuthor } from './dto/create-post.dto';
 import {
   Body,
   Controller,
@@ -11,6 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { Condition } from 'mongoose';
+
+import { User } from './../users/schemas/user.schema';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { CreatePostDtoWithoutAuthor } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
