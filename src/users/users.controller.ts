@@ -25,6 +25,10 @@ import { AuthUser } from 'src/auth/guards/auth-user.guard';
 @ApiBearerAuth()
 @ApiTags('users')
 @Controller('users')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(

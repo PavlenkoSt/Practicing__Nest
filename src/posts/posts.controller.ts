@@ -24,6 +24,10 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 @ApiBearerAuth()
 @ApiTags('posts')
 @Controller('posts')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
