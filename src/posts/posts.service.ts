@@ -14,10 +14,8 @@ export class PostsService {
     return await this.postModel.find().exec();
   }
 
-  async getAllByAuthorId(authorId: string) {
-    return await this.postModel.find({ authorId } as {
-      authorId: Condition<User>;
-    });
+  async getAllByAuthorId(authorId: Condition<User>) {
+    return await this.postModel.find({ authorId });
   }
 
   async getOneById(id: string) {
@@ -25,12 +23,12 @@ export class PostsService {
   }
 
   async create(postDto: CreatePostDto) {
-    const newPost = new this.postModel(postDto);
+    const newPost = await this.postModel.create(postDto);
     return newPost.save();
   }
 
   async edit(postId: string, postDto: UpdatePostDto) {
-    return this.postModel.updateOne({ _id: postId }, postDto);
+    return await this.postModel.updateOne({ _id: postId }, postDto);
   }
 
   async editMyPost(
@@ -38,7 +36,7 @@ export class PostsService {
     postId: string,
     postDto: UpdatePostDto,
   ) {
-    return this.postModel.updateOne({ _id: postId, authorId }, postDto);
+    return await this.postModel.updateOne({ _id: postId, authorId }, postDto);
   }
 
   async deleteOne(id: string) {

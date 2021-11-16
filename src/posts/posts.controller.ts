@@ -1,10 +1,7 @@
 import { Condition } from 'mongoose';
 import { User } from './../users/schemas/user.schema';
 import { UpdatePostDto } from './dto/update-post.dto';
-import {
-  CreatePostDto,
-  CreatePostDtoWithoutAuthor,
-} from './dto/create-post.dto';
+import { CreatePostDtoWithoutAuthor } from './dto/create-post.dto';
 import {
   Body,
   Controller,
@@ -34,7 +31,7 @@ export class PostsController {
 
   @Roles(Role.Admin, Role.User)
   @Get('my-posts')
-  getAllMyPosts(@AuthUser('userId') userId: string) {
+  getAllMyPosts(@AuthUser('userId') userId: Condition<User>) {
     return this.postsService.getAllByAuthorId(userId);
   }
 
