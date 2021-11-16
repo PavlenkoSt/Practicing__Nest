@@ -12,7 +12,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop({ default: [Role.User] })
+  @Prop({ default: Role.User })
   role: Role;
 }
 
