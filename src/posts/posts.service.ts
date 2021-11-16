@@ -11,24 +11,44 @@ export class PostsService {
   constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   async getAll() {
-    return await this.postModel.find().exec();
+    try {
+      return await this.postModel.find().exec();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getAllByAuthorId(authorId: Condition<User>) {
-    return await this.postModel.find({ authorId });
+    try {
+      return await this.postModel.find({ authorId });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getOneById(id: string) {
-    return await this.postModel.findById(id);
+    try {
+      return await this.postModel.findById(id);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async create(postDto: CreatePostDto) {
-    const newPost = await this.postModel.create(postDto);
-    return newPost.save();
+    try {
+      const newPost = await this.postModel.create(postDto);
+      return newPost.save();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async edit(postId: string, postDto: UpdatePostDto) {
-    return await this.postModel.updateOne({ _id: postId }, postDto);
+    try {
+      return await this.postModel.updateOne({ _id: postId }, postDto);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async editMyPost(
@@ -36,18 +56,34 @@ export class PostsService {
     postId: string,
     postDto: UpdatePostDto,
   ) {
-    return await this.postModel.updateOne({ _id: postId, authorId }, postDto);
+    try {
+      return await this.postModel.updateOne({ _id: postId, authorId }, postDto);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async deleteOne(id: string) {
-    return await this.postModel.findOneAndDelete({ _id: id });
+    try {
+      return await this.postModel.findOneAndDelete({ _id: id });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async deleteOneMy(authorId: Condition<User>, id: string) {
-    return await this.postModel.findOneAndDelete({ authorId, _id: id });
+    try {
+      return await this.postModel.findOneAndDelete({ authorId, _id: id });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async deleteAllByAuthor(authorId: Condition<User>) {
-    return await this.postModel.deleteMany({ authorId });
+    try {
+      return await this.postModel.deleteMany({ authorId });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
