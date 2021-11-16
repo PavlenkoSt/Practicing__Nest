@@ -14,6 +14,12 @@ export class PostsService {
     return await this.postModel.find().exec();
   }
 
+  async getAllByAuthorId(authorId: string) {
+    return await this.postModel.find({ authorId } as {
+      authorId: Condition<User>;
+    });
+  }
+
   async getOneById(id: string) {
     return await this.postModel.findById(id);
   }
@@ -27,8 +33,24 @@ export class PostsService {
     return this.postModel.updateOne({ _id: postId }, postDto);
   }
 
+  async editMyPost(
+    authorId: Condition<User>,
+    postId: string,
+    postDto: UpdatePostDto,
+  ) {
+    return this.postModel.updateOne({ _id: postId, authorId }, postDto);
+  }
+
   async deleteOne(id: string) {
-    return await this.postModel.findOneAndDelete({ _id: id });
+    console.log(await this.postModel.findOne({ _id: id }));
+
+    // return await this.postModel.findOneAndDelete({ _id: id });
+  }
+
+  async deleteOneMy(authorId: Condition<User>, id: string) {
+    console.log(await this.postModel.findOne({ authorId, _id: id }));
+
+    // return await this.postModel.findOneAndDelete({ authorId, _id: id });
   }
 
   async deleteAllByAuthor(authorId: Condition<User>) {
