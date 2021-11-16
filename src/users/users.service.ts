@@ -10,11 +10,11 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async getAll(): Promise<User[] | undefined> {
-    return this.userModel.find().exec();
+    return await this.userModel.find().exec();
   }
 
-  async getOne(username: string): Promise<User | undefined> {
-    return this.userModel.findOne({ name: username });
+  async getOne(name: string): Promise<User | undefined> {
+    return await this.userModel.findOne({ name });
   }
 
   async create(userDto: CreateUserDto): Promise<User> {
@@ -22,8 +22,8 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async edit(userId, userDto: UpdateUserDto) {
-    return this.userModel.updateOne({ _id: userId }, userDto);
+  async edit(userId: string, userDto: UpdateUserDto) {
+    return await this.userModel.updateOne({ _id: userId }, userDto);
   }
 
   async delete(id) {
