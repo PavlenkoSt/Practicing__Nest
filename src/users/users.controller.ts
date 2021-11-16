@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Condition } from 'mongoose';
 
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -20,6 +21,7 @@ import { Role } from 'src/types/role.enum';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthUser } from 'src/auth/guards/auth-user.guard';
 
+@ApiTags('users')
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
@@ -42,12 +44,14 @@ export class UsersController {
 
   @Roles(Role.Admin)
   @Post()
+  @ApiBody({ type: CreateUserDto })
   async createNewUser(@Body() userDto: CreateUserDto) {
     return this.usersService.create(userDto);
   }
 
   @Roles(Role.Admin, Role.User)
   @Post('my-profile')
+  @ApiBody({ type: UpdateUserDto })
   async editSelf(
     @AuthUser('userId') userId: string,
     @Body() userDto: UpdateUserDto,
@@ -57,6 +61,7 @@ export class UsersController {
 
   @Roles(Role.Admin)
   @Post(':id')
+  @ApiBody({ type: UpdateUserDto })
   async editUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
     return this.usersService.edit(id, userDto);
   }

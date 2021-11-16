@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Condition } from 'mongoose';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 import { User } from './../users/schemas/user.schema';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -19,6 +20,7 @@ import { Role } from 'src/types/role.enum';
 import { AuthUser } from 'src/auth/guards/auth-user.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+@ApiTags('posts')
 @Controller('posts')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class PostsController {
@@ -44,15 +46,14 @@ export class PostsController {
 
   @Roles(Role.Admin, Role.User)
   @Post()
-  createPost(
-    @AuthUser('userId') userId,
-    @Body() postDto: CreatePostDto,
-  ) {
+  @ApiBody({ type: CreatePostDto })
+  createPost(@AuthUser('userId') userId, @Body() postDto: CreatePostDto) {
     return this.postsService.create({ ...postDto, authorId: userId });
   }
 
   @Roles(Role.Admin, Role.User)
   @Post('my-posts/:id')
+  @ApiBody({ type: UpdatePostDto })
   editMyPost(
     @AuthUser('userId') userId: Condition<User>,
     @Param('id') postId,
@@ -63,6 +64,7 @@ export class PostsController {
 
   @Roles(Role.Admin)
   @Post(':id')
+  @ApiBody({ type: UpdatePostDto })
   editPost(@Param('id') postId, @Body() postDto: UpdatePostDto) {
     return this.postsService.edit(postId, postDto);
   }
