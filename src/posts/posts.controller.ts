@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Condition } from 'mongoose';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { User } from './../users/schemas/user.schema';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -20,6 +20,7 @@ import { Role } from 'src/types/role.enum';
 import { AuthUser } from 'src/auth/guards/auth-user.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+@ApiBearerAuth()
 @ApiTags('posts')
 @Controller('posts')
 @UseGuards(JwtAuthGuard, RolesGuard)

@@ -21,6 +21,7 @@ import { Role } from 'src/types/role.enum';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthUser } from 'src/auth/guards/auth-user.guard';
 
+@ApiBearerAuth()
 @ApiTags('users')
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -32,7 +33,6 @@ export class UsersController {
 
   @Roles(Role.Admin, Role.User)
   @Get()
-  // @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Get all users',
