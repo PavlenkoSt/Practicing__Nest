@@ -29,6 +29,10 @@ export class UsersService {
 
   async create(userDto: CreateUserDto): Promise<User> {
     try {
+      if (!userDto.name || !userDto.password) {
+        throw new Error('Need name and password');
+      }
+
       const { password } = userDto;
 
       const hash = await bcrypt.hash(password, 10);

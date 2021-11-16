@@ -35,8 +35,12 @@ export class PostsService {
     }
   }
 
-  async create(postDto: CreatePostDto | { authorId: string }) {
+  async create(postDto: CreatePostDto & { authorId: string }) {
     try {
+      if (!postDto.title || !postDto.description || !postDto.authorId) {
+        throw new Error('Need title, description and authorId');
+      }
+
       const newPost = await this.postModel.create(postDto);
       return newPost.save();
     } catch (e) {

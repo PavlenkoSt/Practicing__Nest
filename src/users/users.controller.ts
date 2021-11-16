@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Condition } from 'mongoose';
 
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -32,18 +32,31 @@ export class UsersController {
 
   @Roles(Role.Admin, Role.User)
   @Get()
+  // @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: 'Get all users',
+  })
   async getAllUsers() {
     return this.usersService.getAll();
   }
 
   @Roles(Role.Admin, Role.User)
   @Get(':username')
+  @ApiResponse({
+    status: 200,
+    description: 'Get user by username',
+  })
   async getOneUser(@Param('username') username: string) {
     return this.usersService.getOne(username);
   }
 
   @Roles(Role.Admin)
   @Post()
+  @ApiResponse({
+    status: 200,
+    description: 'Create user (admin)',
+  })
   @ApiBody({ type: CreateUserDto })
   async createNewUser(@Body() userDto: CreateUserDto) {
     return this.usersService.create(userDto);
@@ -51,6 +64,10 @@ export class UsersController {
 
   @Roles(Role.Admin, Role.User)
   @Post('my-profile')
+  @ApiResponse({
+    status: 200,
+    description: 'Update self user profile',
+  })
   @ApiBody({ type: UpdateUserDto })
   async editSelf(
     @AuthUser('userId') userId: string,
@@ -61,6 +78,10 @@ export class UsersController {
 
   @Roles(Role.Admin)
   @Post(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Update user (admin)',
+  })
   @ApiBody({ type: UpdateUserDto })
   async editUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
     return this.usersService.edit(id, userDto);
@@ -68,6 +89,10 @@ export class UsersController {
 
   @Roles(Role.Admin, Role.User)
   @Delete('my-profile')
+  @ApiResponse({
+    status: 200,
+    description: 'Delete self profile',
+  })
   async deleteSelf(@AuthUser('userId') userId: Condition<User>) {
     await this.postsService.deleteAllByAuthor(userId);
     return this.usersService.delete(userId);
@@ -75,6 +100,10 @@ export class UsersController {
 
   @Roles(Role.Admin)
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Delete profile (admin)',
+  })
   async deleteuser(@Param('id') id: Condition<User>) {
     await this.postsService.deleteAllByAuthor(id);
     return this.usersService.delete(id);
