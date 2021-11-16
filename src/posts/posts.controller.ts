@@ -11,7 +11,7 @@ import { Condition } from 'mongoose';
 
 import { User } from './../users/schemas/user.schema';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { CreatePostDtoWithoutAuthor } from './dto/create-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
@@ -46,7 +46,7 @@ export class PostsController {
   @Post()
   createPost(
     @AuthUser('userId') userId,
-    @Body() postDto: CreatePostDtoWithoutAuthor,
+    @Body() postDto: CreatePostDto,
   ) {
     return this.postsService.create({ ...postDto, authorId: userId });
   }

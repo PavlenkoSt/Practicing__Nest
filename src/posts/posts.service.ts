@@ -35,7 +35,7 @@ export class PostsService {
     }
   }
 
-  async create(postDto: CreatePostDto) {
+  async create(postDto: CreatePostDto | { authorId: string }) {
     try {
       const newPost = await this.postModel.create(postDto);
       return newPost.save();

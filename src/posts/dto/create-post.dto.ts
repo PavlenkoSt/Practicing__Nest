@@ -1,10 +1,9 @@
-export class CreatePostDto {
-  title: string;
-  description: string;
-  authorId: string;
-}
+import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePostDtoWithoutAuthor {
+export class CreatePostDto {
+  @ApiProperty()
   title: string;
+
+  @ApiProperty()
   description: string;
 }
