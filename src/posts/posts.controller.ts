@@ -68,6 +68,10 @@ export class PostsController {
     status: 200,
     description: 'Create posts',
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request, validation problem',
+  })
   @ApiBody({ type: CreatePostDto })
   createPost(
     @AuthUser('userId') userId,

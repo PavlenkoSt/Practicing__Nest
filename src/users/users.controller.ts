@@ -62,6 +62,10 @@ export class UsersController {
     status: 200,
     description: 'Create user (admin)',
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request, validation problem',
+  })
   @ApiBody({ type: CreateUserDto })
   async createNewUser(@Body(new ValidationPipe()) userDto: CreateUserDto) {
     return this.usersService.create(userDto);
