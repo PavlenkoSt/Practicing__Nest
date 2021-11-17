@@ -86,7 +86,7 @@ export class PostsController {
   editMyPost(
     @AuthUser('userId') userId: Condition<User>,
     @Param('id') postId,
-    @Body(new ValidationPipe()) postDto: UpdatePostDto,
+    @Body() postDto: UpdatePostDto,
   ) {
     return this.postsService.editMyPost(userId, postId, postDto);
   }
@@ -98,10 +98,7 @@ export class PostsController {
     description: 'Edit post (admin)',
   })
   @ApiBody({ type: UpdatePostDto })
-  editPost(
-    @Param('id') postId,
-    @Body(new ValidationPipe()) postDto: UpdatePostDto,
-  ) {
+  editPost(@Param('id') postId, @Body() postDto: UpdatePostDto) {
     return this.postsService.edit(postId, postDto);
   }
 

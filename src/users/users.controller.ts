@@ -76,7 +76,7 @@ export class UsersController {
   @ApiBody({ type: UpdateUserDto })
   async editSelf(
     @AuthUser('userId') userId: string,
-    @Body(new ValidationPipe()) userDto: UpdateUserDto,
+    @Body() userDto: UpdateUserDto,
   ) {
     return this.usersService.edit(userId, userDto);
   }
@@ -87,11 +87,8 @@ export class UsersController {
     status: 200,
     description: 'Update user (admin)',
   })
-  @ApiBody({ type: UpdateUserDto })
-  async editUser(
-    @Param('id') id: string,
-    @Body(new ValidationPipe()) userDto: UpdateUserDto,
-  ) {
+  @ApiBody({ type: CreateUserDto })
+  async editUser(@Param('id') id: string, @Body() userDto: CreateUserDto) {
     return this.usersService.edit(id, userDto);
   }
 
