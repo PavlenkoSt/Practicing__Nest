@@ -1,4 +1,4 @@
-import { ValidationPipe } from './../pipes/validation.pipe';
+import { ValidationPipe } from 'src/pipes/validation.pipe';
 import {
   Body,
   Controller,
@@ -11,15 +11,16 @@ import {
 import { Condition } from 'mongoose';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { AuthUser } from 'src/guards/auth-user.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+
 import { User } from './../users/schemas/user.schema';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/types/role.enum';
-import { AuthUser } from 'src/auth/guards/auth-user.guard';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiBearerAuth()
 @ApiTags('posts')

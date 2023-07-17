@@ -48,7 +48,7 @@ export class AuthService {
       }
 
       throw new HttpException(
-        'Uncorrect name or password',
+        'Incorrect name or password',
         HttpStatus.BAD_REQUEST,
       );
     } catch (e) {

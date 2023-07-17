@@ -1,7 +1,7 @@
-import { ValidationPipe } from './../pipes/validation.pipe';
 import { Controller, Post, Body } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 

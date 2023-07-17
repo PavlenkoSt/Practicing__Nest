@@ -7,20 +7,23 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ValidationPipe } from './../pipes/validation.pipe';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Condition } from 'mongoose';
 
+import { ValidationPipe } from 'src/pipes/validation.pipe';
+
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './schemas/user.schema';
-import { PostsService } from 'src/posts/posts.service';
-import { UsersService } from './users.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
+
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { AuthUser } from 'src/guards/auth-user.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+
 import { Role } from 'src/types/role.enum';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AuthUser } from 'src/auth/guards/auth-user.guard';
+import { User } from './schemas/user.schema';
+import { PostsService } from '../posts/posts.service';
+import { UsersService } from './users.service';
 
 @ApiBearerAuth()
 @ApiTags('users')

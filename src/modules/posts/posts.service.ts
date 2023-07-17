@@ -5,7 +5,7 @@ import { Condition, Model } from 'mongoose';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post, PostDocument } from './schemas/post.schema';
-import { User } from 'src/users/schemas/user.schema';
+import { User } from '../users/schemas/user.schema';
 
 @Injectable()
 export class PostsService {
